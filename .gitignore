@@ -160,4 +160,4 @@ cython_debug/
 #.idea/
 
 # Project Ignore
-translate/*.json
+translate/json/*.json

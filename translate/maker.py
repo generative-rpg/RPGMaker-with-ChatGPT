@@ -1,34 +1,36 @@
 import json
 
+BASE_PATH = "<YOUR RMMZ PATH ex. C:/work/RMMZ>"
+GAME_NAME = "<YOUR RPG FOLDER NAME ex. EternalQuest>"
 
-def init_data(base_path, game_name):
-    with open(f"{base_path}/{game_name}/data/Skills.json", mode="r", encoding="utf8") as f:
+
+def init_data():
+    with open(f"{BASE_PATH}/{GAME_NAME}/data/Skills.json", mode="r", encoding="utf8") as f:
         skills = json.load(f)
-    with open(f"{base_path}/{game_name}/data/Items.json", mode="r", encoding="utf8") as f:
+    with open(f"{BASE_PATH}/{GAME_NAME}/data/Items.json", mode="r", encoding="utf8") as f:
         items = json.load(f)
-    with open(f"{base_path}/{game_name}/data/Weapons.json", mode="r", encoding="utf8") as f:
+    with open(f"{BASE_PATH}/{GAME_NAME}/data/Weapons.json", mode="r", encoding="utf8") as f:
         weapons = json.load(f)
-    with open(f"{base_path}/{game_name}/data/Armors.json", mode="r", encoding="utf8") as f:
+    with open(f"{BASE_PATH}/{GAME_NAME}/data/Armors.json", mode="r", encoding="utf8") as f:
         armors = json.load(f)
-
-    with open(f"{base_path}/{game_name}/data/Actors.json", mode="r", encoding="utf8") as f:
+    with open(f"{BASE_PATH}/{GAME_NAME}/data/Actors.json", mode="r", encoding="utf8") as f:
         actors = json.load(f)
-    with open(f"{base_path}/{game_name}/data/Classes.json", mode="r", encoding="utf8") as f:
+    with open(f"{BASE_PATH}/{GAME_NAME}/data/Classes.json", mode="r", encoding="utf8") as f:
         classes = json.load(f)
 
-    with open(f"{base_path}/{game_name}/data/Enemies.json", mode="r", encoding="utf8") as f:
+    with open(f"{BASE_PATH}/{GAME_NAME}/data/Enemies.json", mode="r", encoding="utf8") as f:
         enemies = json.load(f)
-    with open(f"{base_path}/{game_name}/data/Troops.json", mode="r", encoding="utf8") as f:
+    with open(f"{BASE_PATH}/{GAME_NAME}/data/Troops.json", mode="r", encoding="utf8") as f:
         troops = json.load(f)
 
-    with open(f"{base_path}/{game_name}/data/Map001.json", mode="r", encoding="utf8") as f:
+    with open(f"{BASE_PATH}/{GAME_NAME}/data/Map001.json", mode="r", encoding="utf8") as f:
         map001 = json.load(f)
 
-    with open(f"{base_path}/{game_name}/data/Animations.json", mode="r", encoding="utf8") as f:
+    with open(f"{BASE_PATH}/{GAME_NAME}/data/Animations.json", mode="r", encoding="utf8") as f:
         animations = json.load(f)
-    with open(f"{base_path}/{game_name}/data/States.json", mode="r", encoding="utf8") as f:
+    with open(f"{BASE_PATH}/{GAME_NAME}/data/States.json", mode="r", encoding="utf8") as f:
         states = json.load(f)
-    with open(f"{base_path}/{game_name}/data/System.json", mode="r", encoding="utf8") as f:
+    with open(f"{BASE_PATH}/{GAME_NAME}/data/System.json", mode="r", encoding="utf8") as f:
         system = json.load(f)
 
     # RPGMZに元からあるもの
@@ -47,14 +49,26 @@ def init_data(base_path, game_name):
         "system": system,
     }
 
-    with open("./members.json", mode="r", encoding="utf8") as f:
+    with open("./json/members.json", mode="r", encoding="utf8") as f:
         members = json.load(f)
-
-    with open("./skills.json", mode="r", encoding="utf8") as f:
+    with open("./json/enemies.json", mode="r", encoding="utf8") as f:
+        enemies = json.load(f)
+    with open("./json/skills.json", mode="r", encoding="utf8") as f:
         skills = json.load(f)
+    with open("./json/enemy_skills.json", mode="r", encoding="utf8") as f:
+        enemy_skills = json.load(f)
 
-    gpt = {"members": members, "skills": skills}
+    gpt = {"members": members, "enemies": enemies, "skills": skills, "enemy_skills": enemy_skills}
     return data, gpt
+
+
+def get_skills_id(data, skill_name):
+    try:
+        skill_id = [skill["id"] for skill in data["skills"][1:] if skill_name == skill["name"]][0]
+    except Exception as e:
+        print(f"not found skill_name {skill_name}")
+        raise e
+    return skill_id
 
 
 def get_animation_id(data, animation_name):
